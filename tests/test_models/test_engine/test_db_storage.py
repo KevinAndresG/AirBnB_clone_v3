@@ -14,8 +14,7 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
-import json
-import os
+from models import storage
 import pep8
 import unittest
 DBStorage = db_storage.DBStorage
@@ -66,7 +65,11 @@ test_db_storage.py'])
                              "{:s} method needs a docstring".format(func[0]))
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
-
+class Test_methods(unittest.TestCase):
+    """ check the new methods """
+    def test_not_a_class(self):
+        """ test to pass a class that does not exist """
+        self.assertEqual(storage.count("not"), None)
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
