@@ -70,7 +70,9 @@ class Test_methods(unittest.TestCase):
     def test_not_a_class(self):
         """ test to pass a class that does not exist """
         self.assertEqual(storage.count("not"), None)
-
+    def test_not_id_passed(self):
+        """ testing if id passed not equal """
+        self.assertEqual(storage.get(), None)
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
