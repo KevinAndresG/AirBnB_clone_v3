@@ -13,7 +13,9 @@ def json_status():
     '''
     returns a JSON: "status": "OK"
     '''
-    return jsonify({"status": "OK"})
+    return jsonify({
+                    "status": "OK"
+                    })
 
 
 @app_views.route('/stats')
