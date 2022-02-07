@@ -14,6 +14,7 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+from models import storage
 import json
 import os
 import pep8
@@ -67,6 +68,14 @@ test_file_storage.py'])
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
 
+class Test_methods(unittest.TestCase):
+    """ check the new methods """
+    def test_not_a_class(self):
+        """ test to pass a class that does not exist """
+        self.assertEqual(storage.count("not"), None)
+    def test_not_id_passed(self):
+        """ testing if id passed not equal """
+        self.assertEqual(storage.get(), None)
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
