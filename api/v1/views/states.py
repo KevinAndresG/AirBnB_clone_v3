@@ -26,10 +26,10 @@ def get_id(state_id):
     Retrieves a State object: GET /api/v1/states/<state_id>
     '''
     id_state = storage.get("State", state_id)
-    if id_state is None:
-        abort(404)
-    else:
+    if id_state:
         return jsonify(id_state.to_dict())
+    else:
+        abort(404)
 
 
 @app_views.route('/states/<state_id>', methods=['DELETE'],
