@@ -69,12 +69,14 @@ def update_states(state_id):
     Updates a State object: PUT /api/v1/states/<state_id>
     '''
     cont = request.get_json()
+    remove_keys = ["id", "created_at", "updated_at"]
     if type(cont) is dict:
-        name = cont['name']
         state_obj = storage.get('State', state_id)
         if state_obj:
-            state_obj.name = name
-            storage.save()
-            return jsonify(state_obj.to_dict()), 200
+            for key, value in cont.items():
+                if key not in remove_keys:
+                    setattr(state_obj, key, value)
+                    storage.save()
+                    return jsonify(state_obj.to_dict()), 200
         abort(404)
     abort(400, "Not a JSON")
