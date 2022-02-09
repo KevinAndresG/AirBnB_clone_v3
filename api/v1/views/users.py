@@ -26,16 +26,16 @@ def user_id(user_id):
     '''
     Retrieves a User object: GET /api/v1/users/<user_id>
     '''
-    id_user = storage.get("User", user_id)
-    if id_user:
-        return jsonify(id_user.to_dict())
+    user = storage.get("User", user_id)
+    if user:
+        return jsonify(user.to_dict())
     else:
         abort(404)
 
 
 @app_views.route('/users/<user_id>', methods=['DELETE'],
                  strict_slashes=False)
-def delete_anmenity(user_id):
+def delete_user(user_id):
     '''
     Deletes a user object: DELETE /api/v1/users/<user_id>
     '''
