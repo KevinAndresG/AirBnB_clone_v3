@@ -61,13 +61,13 @@ def create_place(city_id):
     user_obj = storage.get("User", cont['user_id'])
     if type(cont) is not dict:
         abort(400, "Not a JSON")
-    elif "name" not in cont.keys():
+    if "name" not in cont.keys():
         abort(400, "Missing name")
-    elif "user_id" not in cont.keys():
+    if "user_id" not in cont.keys():
         abort(400, "Missing user_id")
-    else:
-        if city_obj is None or user_obj is None:
-            abort(404)
+    if not city_obj:
+        abort(404)
+    if user_obj is None
 
     cont['city_id'] = city_obj.id
     cont['user_id'] = user_obj.id
@@ -84,7 +84,7 @@ def update_place(place_id):
     '''
     cont = request.get_json()
     place_obj = storage.get('Place', place_id)
-    remove_keys = ["user_id", "id", 'city_id', "created_at", "updated_at"]
+    remove_keys = ["id", "user_id", 'city_id', "created_at", "updated_at"]
     if not place_obj:
         abort(404)
     if type(cont) is not dict:
