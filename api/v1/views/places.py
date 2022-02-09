@@ -83,14 +83,14 @@ def update_place(place_id):
     Updates a place object: PUT /api/v1/places/<place_id>
     '''
     cont = request.get_json()
-    remove_keys = ["user_id", "id", "created_at", "updated_at"]
-    if type(cont) is dict:
-        place_obj = storage.get('Place', place_id)
-        if place_obj:
-            for key, value in cont.items():
-                if key not in remove_keys:
-                    setattr(place_obj, key, value)
-                storage.save()
-                return jsonify(place_obj.to_dict()), 200
+    place_obj = storage.get('Place', place_id)
+    remove_keys = ["user_id", "id", 'city_id', "created_at", "updated_at"]
+    if not place_obj:
         abort(404)
-    abort(400, "Not a JSON")
+    if type(cont) is not dict:
+        abort(400, "Not a JSON")
+    for key, value in cont.items():
+        if key not in remove_keys:
+            setattr(place_obj, key, value)
+    storage.save()
+    return jsonify(place_obj.to_dict()), 200
