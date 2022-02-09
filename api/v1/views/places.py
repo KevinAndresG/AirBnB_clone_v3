@@ -59,21 +59,22 @@ def create_place(city_id):
     cont = request.get_json()
     city_obj = storage.get("City", city_id)
     user_obj = storage.get("User", cont['user_id'])
-    if city_obj or user_obj:
-        if type(cont) is dict:
-            if "name" not in cont.keys():
-                abort(400, "Missing name")
-            elif "user_id" not in cont.keys():
-                abort(400, "Missing user_id")
-            else:
-                cont['city_id'] = city_obj.id
-                cont['user_id'] = user_obj.id
-                new_place = Place(**cont)
-                storage.new(new_place)
-                storage.save()
-                return jsonify(new_place.to_dict()), 201
+    if type(cont) is not dict:
         abort(400, "Not a JSON")
-    abort(404)
+    elif "name" not in cont.keys():
+        abort(400, "Missing name")
+    elif "user_id" not in cont.keys():
+        abort(400, "Missing user_id")
+    else:
+        if city_obj is None or user_obj is None:
+            abort(404)
+
+    cont['city_id'] = city_obj.id
+    cont['user_id'] = user_obj.id
+    new_place = Place(**cont)
+    storage.new(new_place)
+    storage.save()
+    return jsonify(new_place.to_dict()), 201
 
 
 @app_views.route('/places/<place_id>', methods=['PUT'], strict_slashes=False)
