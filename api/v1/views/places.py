@@ -67,7 +67,8 @@ def create_place(city_id):
         abort(400, "Missing user_id")
     if not city_obj:
         abort(404)
-    if user_obj is None
+    if user_obj is None:
+        abort(404)
 
     cont['city_id'] = city_obj.id
     cont['user_id'] = user_obj.id
